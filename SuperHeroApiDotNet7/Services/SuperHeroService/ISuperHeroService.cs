@@ -2,14 +2,14 @@
 {
     public interface ISuperHeroService
     { //define your method here
-        List<SuperHeroModel> GetAllHeroes();
-        SuperHeroModel GetSingleHero(int id);
+        Task<List<SuperHeroModel>> GetAllHeroes();
+        Task<SuperHeroModel?> GetSingleHero(int id);
 
-        List<SuperHeroModel> AddHero(SuperHeroModel hero);
+        Task<List<SuperHeroModel>> AddHero(SuperHeroModel hero);
 
-        List<SuperHeroModel>? UpdateHero(int id, SuperHeroModel request);
+        Task<List<SuperHeroModel>?> UpdateHero(int id, SuperHeroModel request);
 
-        List<SuperHeroModel>? DeleteHero(int id);
+        Task<List<SuperHeroModel>?> DeleteHero(int id);
 
     }
 }

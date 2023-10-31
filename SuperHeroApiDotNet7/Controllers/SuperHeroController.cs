@@ -10,23 +10,23 @@ namespace SuperHeroApiDotNet7.Controllers
     [ApiController]
     public class SuperHeroController : ControllerBase
     {
-        private readonly ISuperHeroService superHeroService;
+        private readonly ISuperHeroService _superHeroService;
 
         //ctor
         public SuperHeroController(ISuperHeroService superHeroService)
         {
-            this.superHeroService = superHeroService;
+            _superHeroService = superHeroService;
         }
         [HttpGet]
         public async Task<ActionResult<List<SuperHeroModel>>> GetAllHeroes()
         {
-            var result = this.superHeroService.GetAllHeroes();
-            return Ok(result);
+            return await _superHeroService.GetAllHeroes();
+            //return Ok(result);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<List<SuperHeroModel>>> GetSingleHero(int id)
         {
-            var result = this.superHeroService.GetSingleHero(id);
+            var result = await _superHeroService.GetSingleHero(id);
             if (result is null)
             {
                 return NotFound("Hero does not exists");
@@ -37,13 +37,14 @@ namespace SuperHeroApiDotNet7.Controllers
 
         public async Task<ActionResult<List<SuperHeroModel>>> AddHero(SuperHeroModel hero)
         {
-            var result = this.superHeroService.AddHero(hero);
+            var result =await _superHeroService.AddHero(hero);
+
             return Ok(result);
         }
         [HttpPut("{id}")] // Update a hero
         public async Task<ActionResult<List<SuperHeroModel>>> UpdateHero(int id, SuperHeroModel request)
         {
-            var result = this.superHeroService.UpdateHero(id, request);
+            var result = await _superHeroService.UpdateHero(id, request);
             if (result is null)
             {
                 return NotFound("Sorry, but this hero doesn't exist.");
@@ -54,7 +55,7 @@ namespace SuperHeroApiDotNet7.Controllers
 
         public async Task<ActionResult<List<SuperHeroModel>>> DeleteHero(int id)
         {
-            var result = this.superHeroService.DeleteHero(id);
+            var result = await _superHeroService.DeleteHero(id);
             if (result is null)
             {
                 return NotFound("Hero not found");
