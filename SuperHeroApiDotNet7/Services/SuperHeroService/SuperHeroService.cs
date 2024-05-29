@@ -9,14 +9,14 @@ namespace SuperHeroApiDotNet7.Services.SuperHeroService
                 new SuperHeroModel{
                 Id = 1,
                 Name = "Spider Man",
-                FirstName = "Peter",
+                
                 LastName = "Parker",
                 Place = "NewYork"
                 },
                 new SuperHeroModel{
                     Id = 2,
                     Name = "Iron Man",
-                    FirstName = "Tony",
+                  
                     LastName= "Stark",
                     Place = "Malibu"
                 }
@@ -64,7 +64,7 @@ namespace SuperHeroApiDotNet7.Services.SuperHeroService
             return hero;
         }
 
-        public async Task<List<SuperHeroModel>?> UpdateHero(int id, SuperHeroModel request)
+        public async Task<List<SuperHeroModel>?> Update(int id, SuperHeroModel request)
         {
 
             var hero = await _context.SuperHeroes.FindAsync(id);
@@ -72,12 +72,18 @@ namespace SuperHeroApiDotNet7.Services.SuperHeroService
             {
                 return null;
             }
-            hero.FirstName = request.FirstName;
-            hero.LastName = request.LastName;
-            hero.Place = request.Place;
-            hero.Name = request.Name;
+            //hero.FirstName = request.FirstName;
+            //hero.LastName = request.LastName;
+            //hero.Place = request.Place;
+            //hero.Name = request.Name;
 
-            await _context.SaveChangesAsync();
+
+            hero.Name = request.Name;
+            //_context.Entry(hero).State=EntityState.Modified;
+            _context.Attach(hero);
+            //await _context.SaveChangesAsync();
+           
+            var result = _context.SaveChanges();
             return await _context.SuperHeroes.ToListAsync();
 
         }

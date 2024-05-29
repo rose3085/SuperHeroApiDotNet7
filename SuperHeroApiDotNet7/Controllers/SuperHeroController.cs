@@ -29,28 +29,91 @@ namespace SuperHeroApiDotNet7.Controllers
             var result = await _superHeroService.GetSingleHero(id);
             if (result is null)
             {
-                return NotFound("Hero does not exists");
+                throw new Exception();
             }
             return Ok(result);
         }
-        [HttpPost] //add a hero
+        //[HttpPost] //add a hero
 
-        public async Task<ActionResult<List<SuperHeroModel>>> AddHero(SuperHeroModel hero)
-        {
-            var result =await _superHeroService.AddHero(hero);
+        //public async Task<ActionResult<List<SuperHeroModel>>> AddHero(SuperHeroModel hero)
+        //{
+        //    var result =await _superHeroService.AddHero(hero);
 
-            return Ok(result);
-        }
-        [HttpPut("{id}")] // Update a hero
-        public async Task<ActionResult<List<SuperHeroModel>>> UpdateHero(int id, SuperHeroModel request)
+        //    return Ok(result);
+        //}
+
+
+        [HttpPost]
+
+        public async Task<ActionResult<SuperHeroModel>> AddNewHero(SuperHeroModel hero)
         {
-            var result = await _superHeroService.UpdateHero(id, request);
+
+            var result = await _superHeroService.AddHero(hero);
+
             if (result is null)
             {
-                return NotFound("Sorry, but this hero doesn't exist.");
+                return BadRequest();
             }
+            else
+            {
+                return Ok(result);
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpPut("{id}")] // Update a hero
+        //public async Task<ActionResult<List<SuperHeroModel>>> UpdateHero(int id, SuperHeroModel request)
+        //{
+        //    var result = await _superHeroService.UpdateHero(id, request);
+        //    if (result is null)
+        //    {
+        //        return NotFound("Sorry, but this hero doesn't exist.");
+        //    }
+        //    return Ok(result);
+        //}
+
+        //[HttpPut]
+        //public async Task<ActionResult<List<SuperHeroModel>>> StateUpdate(int id, SuperHeroModel request)
+        //{
+
+        //    var result = await _superHeroService.UpdateHero(id, request);
+        //    if (result is null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(result);
+
+
+
+        [HttpPut]
+        public async Task<ActionResult<List<SuperHeroModel>>> StateUpdate(int id, SuperHeroModel request)
+        {
+
+            var result = await _superHeroService.Update(id, request);
+            if (result is null)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
+
+
+
+
+
         [HttpDelete("{id}")]
 
         public async Task<ActionResult<List<SuperHeroModel>>> DeleteHero(int id)
